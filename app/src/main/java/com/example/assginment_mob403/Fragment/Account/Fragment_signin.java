@@ -32,21 +32,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class Fragment_signup extends Fragment {
+public class Fragment_signin extends Fragment {
     private TextInputLayout edlFirstName, edlLastName, edlEmail, edlPasswordSignIn, edlRePasswordSignIn, edlPhoneSignIn;
     private TextInputEditText edFirstName, edLastName, edEmail, edPasswordSignIn, edRePasswordSignIn, edPhoneSignIn;
     private Button btnSaveSignIn, btnCancelSignIn;
     private String baseUrl = "https://tucaomypham.000webhostapp.com/android_networking_mob403/assginment/";
     ProgressDialog progressDialog;
     Utilities utilities;
-    private final static String TAG = Fragment_signup.class.getSimpleName();
+    private final static String TAG = Fragment_signin.class.getSimpleName();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        View view = inflater.inflate(R.layout.fragment_signin, container, false);
 
         initViewByID(view);
 
@@ -54,7 +54,7 @@ public class Fragment_signup extends Fragment {
 
         initProgressDialog();
 
-        removeErrorTextOnChage();
+        removeErrorTextOnChange();
 
         return view;
     }
@@ -128,7 +128,7 @@ public class Fragment_signup extends Fragment {
         return success;
     }
 
-    private void removeErrorTextOnChage() {
+    private void removeErrorTextOnChange() {
         this.utilities.removeErrorText(edlFirstName, edFirstName);
         this.utilities.removeErrorText(edlLastName, edLastName);
         this.utilities.removeErrorText(edlEmail, edEmail);
@@ -168,8 +168,6 @@ public class Fragment_signup extends Fragment {
                         e.printStackTrace();
                         edlPhoneSignIn.setError(utilities.PhoneInvalid);
                     }
-
-
                 }
             }
         });

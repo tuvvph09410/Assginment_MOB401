@@ -37,14 +37,14 @@
             app:layout_editor_absoluteX="0dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edl_userNameLogin"
+                android:id="@+id/edl_userEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:ems="10"
-                android:hint="Tên đăng nhập"
+                android:hint="Email"
                 android:textColorHint="@color/black"
                 android:theme="@style/my_custom_style"
                 app:endIconMode="clear_text"
@@ -56,7 +56,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_person_24">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_userNameLogin"
+                    android:id="@+id/ed_userEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#D3D5D5"
@@ -78,7 +78,7 @@
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edl_userNameLogin"
+                app:layout_constraintTop_toBottomOf="@+id/edl_userEmail"
                 app:placeholderTextColor="@color/black"
                 app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
