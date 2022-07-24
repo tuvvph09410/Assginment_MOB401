@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Trang chủ" />
+        <item
+            android:id="@+id/nav_loaithu"
+            android:icon="@drawable/ic_baseline_child_friendly_24"
+            android:title="Loại thu" />
+        <item
+            android:id="@+id/nav_khoaithu"
+            android:icon="@drawable/ic_baseline_clean_hands_24"
+            android:title="Khoản thu" />
+        <item
+            android:id="@+id/nav_loaichi"
+            android:icon="@drawable/ic_baseline_adb_24"
+            android:title="Loại chi" />
+        <item
+            android:id="@+id/nav_khoanchi"
+            android:icon="@drawable/ic_baseline_shopping_bag_24"
+            android:title="Khoản chi" />
+        <item
+            android:id="@+id/nav_tietkiem"
+            android:icon="@drawable/ic_baseline_eco_24"
+            android:title="Tiết kiệm" />
+        <item
+            android:id="@+id/nav_personal"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="Thông tin cá nhân" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_round_power_settings_new_24"
+            android:title="Đăng xuất" />
+
+    </group>
+</menu>

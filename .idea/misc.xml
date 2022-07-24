@@ -3,12 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/background_login.xml" value="0.17" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_box_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_adb_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_child_friendly_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_clean_hands_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_eco_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_phone_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_report_gmailerrorred_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_shopping_bag_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_round_power_settings_new_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/radius.xml" value="0.184" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23233695652173914" />
+        <entry key="app/src/main/res/layout/activity_main_thu_chi.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.23233695652173914" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.23233695652173914" />
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/menu/nav_menu_drawer_layout.xml" value="0.35885416666666664" />
       </map>
     </option>
   </component>

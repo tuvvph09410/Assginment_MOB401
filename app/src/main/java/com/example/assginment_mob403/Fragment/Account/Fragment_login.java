@@ -2,6 +2,7 @@ package com.example.assginment_mob403.Fragment.Account;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,13 +16,18 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.assginment_mob403.Activity.MainActivityThuChi;
 import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSelectAccount;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 
 import retrofit2.Call;
@@ -136,6 +142,16 @@ public class Fragment_login extends Fragment {
                 ServerResponseSelectAccount serverResponseSelectAccount = response.body();
                 hideProgress();
                 Toast.makeText(getContext(), serverResponseSelectAccount.getMessage(), Toast.LENGTH_LONG).show();
+                try {
+                    List<User> userList = new ArrayList<>(Arrays.asList(serverResponseSelectAccount.getUser()));
+                    if (userList.size() != 0) {
+                        getDataServer(userList);
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    hideProgress();
+                }
+
             }
 
             @Override
@@ -204,5 +220,37 @@ public class Fragment_login extends Fragment {
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+    }
+
+    private void getDataServer(List<User> userList) {
+        int dataId_user = 0;
+        String dataFirst_name = "";
+        String dataLast_name = "";
+        String dataEmail = "";
+        int dataPhone = 0;
+        String dataPassword = "";
+        String dataRegistration_date = "";
+
+        for (int i = 0; i < userList.size(); i++) {
+            User user = userList.get(i);
+            dataId_user = user.getId_user();
+            dataFirst_name = user.getFirst_name();
+            dataLast_name = user.getLast_name();
+            dataEmail = user.getEmail();
+            dataPhone = user.getPhone();
+            dataPassword = user.getPassword();
+            dataRegistration_date = user.getRegistration_date();
+        }
+        Intent intent = new Intent(getActivity(), MainActivityThuChi.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("dataId_user", dataId_user);
+        bundle.putString("dataFirst_name", dataFirst_name);
+        bundle.putString("dataLast_name", dataLast_name);
+        bundle.putString("dataEmail", dataEmail);
+        bundle.putInt("dataPhone", dataPhone);
+        bundle.putString("dataPassword", dataPassword);
+        bundle.putString("dataRegistration_date", dataRegistration_date);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
