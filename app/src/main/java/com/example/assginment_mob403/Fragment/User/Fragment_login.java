@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -21,6 +22,7 @@ import com.example.assginment_mob403.Interface.UserAPI;
 import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSelectAccount;
+import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,14 +40,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Fragment_login extends Fragment {
-    private TextInputLayout edlEmail, edlPassword;
-    private TextInputEditText edEmail, edPassword;
-    private AppCompatCheckBox cbSaveAccount;
-    private Button btnLogin, btnSignIn;
+    TextInputLayout edlEmail, edlPassword;
+    TextInputEditText edEmail, edPassword;
+    AppCompatCheckBox cbSaveAccount;
+    TextView tvRegister;
+    Button btnLogin;
     private SharedPreferences sharedPreferences;
     private Utilities utilities;
     private ProgressDialog progressDialog;
-    private String baseURL = "https://tucaomypham.000webhostapp.com/android_networking_mob403/assginment/";
     private static final String TAG = Fragment_login.class.getSimpleName();
 
     @Override
@@ -96,7 +98,7 @@ public class Fragment_login extends Fragment {
     }
 
     private void initClickListener() {
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(new Fragment_signin());
@@ -130,7 +132,7 @@ public class Fragment_login extends Fragment {
         final Boolean[] success = {true};
         showProgress();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseURL)
+                .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         UserAPI userAPI = retrofit.create(UserAPI.class);
@@ -179,7 +181,7 @@ public class Fragment_login extends Fragment {
         this.edlPassword = view.findViewById(R.id.edl_passwordLogin);
         this.cbSaveAccount = view.findViewById(R.id.cb_saveAccount);
         this.btnLogin = view.findViewById(R.id.btn_login);
-        this.btnSignIn = view.findViewById(R.id.btn_signIn);
+        this.tvRegister = view.findViewById(R.id.tv_register);
     }
 
     private Boolean validateLogin() {
@@ -190,22 +192,25 @@ public class Fragment_login extends Fragment {
         if (edEmail.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlEmail.setError(this.utilities.EmailRequire);
             success = false;
-        }
-        if (!edEmail.getText().toString().trim().matches(EMAIL_REGEX)) {
-            this.edlEmail.setError(this.utilities.EmailInvalid);
-            success = false;
-        }
-        if (!matcherPassword.matches()) {
-            this.edlPassword.setError(this.utilities.NotSpecialCharacter);
-            success = false;
-        }
-        if (edPassword.getText().toString().trim().length() <= 4 || edPassword.getText().toString().trim().length() >= 20) {
-            this.edlPassword.setError(this.utilities.PasswordLength);
-            success = false;
+        } else {
+            if (!edEmail.getText().toString().trim().matches(EMAIL_REGEX)) {
+                this.edlEmail.setError(this.utilities.EmailInvalid);
+                success = false;
+            }
         }
         if (edPassword.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlPassword.setError(this.utilities.PasswordRequire);
             success = false;
+        } else {
+            if (edPassword.getText().toString().trim().length() <= 4 || edPassword.getText().toString().trim().length() >= 20) {
+                this.edlPassword.setError(this.utilities.PasswordLength);
+                success = false;
+            } else {
+                if (!matcherPassword.matches()) {
+                    this.edlPassword.setError(this.utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
         }
         return success;
     }

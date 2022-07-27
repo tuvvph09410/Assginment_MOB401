@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import com.example.assginment_mob403.Interface.UserAPI;
 import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSignUp;
+import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -33,10 +35,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Fragment_signin extends Fragment {
-    private TextInputLayout edlFirstName, edlLastName, edlEmail, edlPasswordSignIn, edlRePasswordSignIn, edlPhoneSignIn;
-    private TextInputEditText edFirstName, edLastName, edEmail, edPasswordSignIn, edRePasswordSignIn, edPhoneSignIn;
-    private Button btnSaveSignIn, btnCancelSignIn;
-    private String baseUrl = "https://tucaomypham.000webhostapp.com/android_networking_mob403/assginment/";
+    TextInputLayout edlFirstName, edlLastName, edlEmail, edlPasswordSignIn, edlRePasswordSignIn, edlPhoneSignIn;
+    TextInputEditText edFirstName, edLastName, edEmail, edPasswordSignIn, edRePasswordSignIn, edPhoneSignIn;
+    Button btnSaveSignIn;
+    TextView tvLogin;
     ProgressDialog progressDialog;
     Utilities utilities;
     private final static String TAG = Fragment_signin.class.getSimpleName();
@@ -65,66 +67,79 @@ public class Fragment_signin extends Fragment {
         Matcher matcherLastName = this.utilities.NSCPattern.matcher(edLastName.getText().toString().trim());
         Matcher matcherPassword = this.utilities.NSCPattern.matcher(edPasswordSignIn.getText().toString().trim());
         Boolean success = true;
-        if (!matcherFirstName.matches()) {
-            this.edlFirstName.setError(this.utilities.NotSpecialCharacter);
-            success = false;
-        }
-        if (edFirstName.getText().toString().trim().length() < 2 || edFirstName.getText().toString().trim().length() > 20) {
-            this.edlFirstName.setError(this.utilities.FirstNameLength);
-            success = false;
-        }
         if (edFirstName.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlFirstName.setError(this.utilities.FirstNameRequire);
             success = false;
-        }
-        if (!matcherLastName.matches()) {
-            this.edlLastName.setError(this.utilities.NotSpecialCharacter);
-            success = false;
-        }
-        if (edLastName.getText().toString().trim().length() < 2 || edLastName.getText().toString().trim().length() > 20) {
-            this.edlLastName.setError(this.utilities.LastNameLength);
-            success = false;
+        } else {
+            if (edFirstName.getText().toString().trim().length() < 2 || edFirstName.getText().toString().trim().length() > 20) {
+                this.edlFirstName.setError(this.utilities.FirstNameLength);
+                success = false;
+            } else {
+                if (!matcherFirstName.matches()) {
+                    this.edlFirstName.setError(this.utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
         }
         if (edLastName.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlLastName.setError(this.utilities.LastNameRequire);
             success = false;
+        } else {
+            if (edLastName.getText().toString().trim().length() < 2 || edLastName.getText().toString().trim().length() > 20) {
+                this.edlLastName.setError(this.utilities.LastNameLength);
+                success = false;
+            } else {
+                if (!matcherLastName.matches()) {
+                    this.edlLastName.setError(this.utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
         }
-        if (!matcherPassword.matches()) {
-            this.edlPasswordSignIn.setError(this.utilities.NotSpecialCharacter);
-            success = false;
-        }
-        if (edPasswordSignIn.getText().toString().trim().length() < 4 || edPasswordSignIn.getText().toString().trim().length() > 20) {
-            this.edlPasswordSignIn.setError(this.utilities.PasswordLength);
-            success = false;
-        }
+
         if (edPasswordSignIn.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlPasswordSignIn.setError(this.utilities.PasswordRequire);
             success = false;
+        } else {
+            if (edPasswordSignIn.getText().toString().trim().length() < 4 || edPasswordSignIn.getText().toString().trim().length() > 20) {
+                this.edlPasswordSignIn.setError(this.utilities.PasswordLength);
+                success = false;
+            } else {
+                if (!matcherPassword.matches()) {
+                    this.edlPasswordSignIn.setError(this.utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
         }
-        if (edRePasswordSignIn.getText().toString().equalsIgnoreCase("")) {
+        if (edRePasswordSignIn.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlRePasswordSignIn.setError(this.utilities.ConfirmPasswordRequire);
             success = false;
+        } else {
+            if (!edPasswordSignIn.getText().toString().equalsIgnoreCase(edRePasswordSignIn.getText().toString())) {
+                this.edlRePasswordSignIn.setError(this.utilities.PasswordCompare);
+                success = false;
+            }
         }
-        if (!edPasswordSignIn.getText().toString().equalsIgnoreCase(edRePasswordSignIn.getText().toString())) {
-            this.edRePasswordSignIn.setError(this.utilities.PasswordCompare);
-            success = false;
-        }
+
         if (edEmail.getText().toString().trim().equalsIgnoreCase("")) {
             this.edlEmail.setError(this.utilities.EmailRequire);
             success = false;
+        } else {
+            if (!edEmail.getText().toString().trim().matches(EMAIL_REGEX)) {
+                this.edlEmail.setError(this.utilities.EmailInvalid);
+                success = false;
+            }
         }
-        if (!edEmail.getText().toString().trim().matches(EMAIL_REGEX)) {
-            this.edlEmail.setError(this.utilities.EmailInvalid);
-            success = false;
-        }
+
         if (edPhoneSignIn.getText().toString().equalsIgnoreCase("")) {
             edlPhoneSignIn.setError(this.utilities.PhoneLength);
             success = false;
+        } else {
+            if (edPhoneSignIn.getText().toString().trim().length() <= 9 || edPhoneSignIn.getText().toString().trim().length() >= 12) {
+                edlPhoneSignIn.setError(this.utilities.PhoneLength);
+                success = false;
+            }
         }
-        if (edPhoneSignIn.getText().toString().trim().length() <= 9 || edPhoneSignIn.getText().toString().trim().length() >= 12) {
-            edlPhoneSignIn.setError(this.utilities.PhoneLength);
-            success = false;
-        }
+
         return success;
     }
 
@@ -144,7 +159,7 @@ public class Fragment_signin extends Fragment {
     }
 
     private void initClickListener() {
-        this.btnCancelSignIn.setOnClickListener(new View.OnClickListener() {
+        this.tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadFragment(new Fragment_login());
@@ -176,7 +191,7 @@ public class Fragment_signin extends Fragment {
     private void insertDataProcess(String first_name, String last_name, String password, String email, int phone, String registration_date) {
         showProgress();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         UserAPI userAPI = retrofit.create(UserAPI.class);
@@ -220,7 +235,7 @@ public class Fragment_signin extends Fragment {
         this.edlPhoneSignIn = view.findViewById(R.id.edl_phone);
         this.edPhoneSignIn = view.findViewById(R.id.ed_phone);
         this.btnSaveSignIn = view.findViewById(R.id.btn_saveSignIn);
-        this.btnCancelSignIn = view.findViewById(R.id.btn_cancelSignIn);
+        this.tvLogin = view.findViewById(R.id.tv_login);
         utilities = new Utilities();
     }
 

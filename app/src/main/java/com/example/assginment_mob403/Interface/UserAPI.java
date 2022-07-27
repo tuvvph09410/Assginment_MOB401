@@ -1,5 +1,6 @@
 package com.example.assginment_mob403.Interface;
 
+import com.example.assginment_mob403.ServerResponse.ServerResponseChangePassword;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSelectAccount;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSignUp;
 
@@ -25,5 +26,11 @@ public interface UserAPI {
     Call<ServerResponseSelectAccount> getSelectUser_checkLogin(
             @Field("email") String email,
             @Field("password") String password
+    );
+    @FormUrlEncoded
+    @POST("change_password_by_id_user.php")
+    Call<ServerResponseChangePassword> changePasswordById(
+            @Field("id_user") int id_user,
+            @Field("new_password") String new_password
     );
 }

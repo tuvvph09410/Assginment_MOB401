@@ -50,14 +50,16 @@ public class MainActivityThuChi extends AppCompatActivity {
     private String dataPassword = "";
     private String dataRegistration_date = "";
 
+    private static final String TAG = MainActivityThuChi.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_thu_chi);
 
-        initViewByID();
-
         getIntentExtra();
+
+        initViewByID();
 
         init();
 
@@ -84,7 +86,7 @@ public class MainActivityThuChi extends AppCompatActivity {
                 bundle.putInt("dataId_user", dataId_user);
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        loadFragment(new Fragment_home(), "Trang chủ");
+                        init();
                         break;
                     case R.id.nav_loaithu:
                         Fragment_loaithu fragment_loaithu = new Fragment_loaithu();
@@ -111,6 +113,7 @@ public class MainActivityThuChi extends AppCompatActivity {
                         Fragment_change_password fragment_change_password = new Fragment_change_password();
                         Bundle bundleChange = new Bundle();
                         bundleChange.putInt("dataId_user", dataId_user);
+                        bundleChange.putString("dataEmail", dataEmail);
                         bundleChange.putString("dataPassword", dataPassword);
                         fragment_change_password.setArguments(bundleChange);
                         loadFragment(fragment_change_password, "Đổi mật khẩu");
@@ -151,7 +154,16 @@ public class MainActivityThuChi extends AppCompatActivity {
     }
 
     private void init() {
-        loadFragment(new Fragment_home(), "Trang chủ");
+        Fragment_home fragment_home = new Fragment_home();
+        Bundle bundleHome = new Bundle();
+        bundleHome.putInt("dataId_user", dataId_user);
+        bundleHome.putString("dataFirst_name", dataFirst_name);
+        bundleHome.putString("dataLast_name", dataLast_name);
+        bundleHome.putString("dataEmail", dataEmail);
+        bundleHome.putInt("dataPhone", dataPhone);
+        bundleHome.putString("dataRegistration_date", dataRegistration_date);
+        fragment_home.setArguments(bundleHome);
+        loadFragment(fragment_home, "Trang chủ");
     }
 
     private void getIntentExtra() {

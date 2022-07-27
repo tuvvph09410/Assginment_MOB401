@@ -23,16 +23,37 @@ public class Fragment_home extends Fragment {
     BarChart barChart;
     Button btnReset;
     FrameLayout fl_bar_chart;
+    private int dataId_user = 0;
+    private String dataFirst_name = "";
+    private String dataLast_name = "";
+    private String dataEmail = "";
+    private int dataPhone = 0;
+    private String dataRegistration_date = "";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        initGetArguments();
+
         initViewById(view);
 
         initClickListener();
         return view;
+    }
+
+    private void initGetArguments() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            dataId_user = bundle.getInt("dataId_user");
+            dataFirst_name = bundle.getString("dataFirst_name");
+            dataLast_name = bundle.getString("dataLast_name");
+            dataEmail = bundle.getString("dataEmail");
+            dataPhone = bundle.getInt("dataPhone");
+            dataRegistration_date = bundle.getString("dataRegistration_date");
+        }
     }
 
     private void initClickListener() {
@@ -51,7 +72,16 @@ public class Fragment_home extends Fragment {
         clTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Fragment_information_user());
+                Fragment_information_user fragment_information_user = new Fragment_information_user();
+                Bundle bundleIF = new Bundle();
+                bundleIF.putInt("dataId_user", dataId_user);
+                bundleIF.putString("dataFirst_name", dataFirst_name);
+                bundleIF.putString("dataLast_name", dataLast_name);
+                bundleIF.putString("dataEmail", dataEmail);
+                bundleIF.putInt("dataPhone", dataPhone);
+                bundleIF.putString("dataRegistration_date", dataRegistration_date);
+                fragment_information_user.setArguments(bundleIF);
+                loadFragment(fragment_information_user);
             }
         });
         clTietKiem.setOnClickListener(new View.OnClickListener() {

@@ -26,13 +26,14 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23233695652173914" />
         <entry key="app/src/main/res/layout/activity_main_thu_chi.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.23233695652173914" />
+        <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_information_user.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_khoanthu.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_loaichi.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_loaithu.xml" value="0.26811594202898553" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.23233695652173914" />
-        <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/menu/nav_menu_drawer_layout.xml" value="0.35885416666666664" />
