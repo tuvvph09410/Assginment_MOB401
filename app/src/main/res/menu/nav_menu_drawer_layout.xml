@@ -13,7 +13,7 @@
             android:icon="@drawable/ic_baseline_child_friendly_24"
             android:title="Loại thu" />
         <item
-            android:id="@+id/nav_khoaithu"
+            android:id="@+id/nav_khoanthu"
             android:icon="@drawable/ic_baseline_clean_hands_24"
             android:title="Khoản thu" />
         <item
@@ -25,13 +25,17 @@
             android:icon="@drawable/ic_baseline_shopping_bag_24"
             android:title="Khoản chi" />
         <item
+            android:id="@+id/nav_changepassword"
+            android:icon="@drawable/ic_baseline_lock_24"
+            android:title="Đổi mật khẩu" />
+        <item
+            android:id="@+id/nav_information_user"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="Thông tin cá nhân" />
+        <item
             android:id="@+id/nav_tietkiem"
             android:icon="@drawable/ic_baseline_eco_24"
             android:title="Tiết kiệm" />
-        <item
-            android:id="@+id/nav_personal"
-            android:icon="@drawable/ic_baseline_person_24"
-            android:title="Thông tin cá nhân" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_round_power_settings_new_24"

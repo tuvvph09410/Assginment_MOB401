@@ -19,6 +19,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_phone_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_report_gmailerrorred_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_shopping_bag_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_view_day_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_round_power_settings_new_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/radius.xml" value="0.184" />
@@ -26,6 +27,10 @@
         <entry key="app/src/main/res/layout/activity_main_thu_chi.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.23233695652173914" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_information_user.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_khoanthu.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_loaichi.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_loaithu.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.23233695652173914" />
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.26811594202898553" />
