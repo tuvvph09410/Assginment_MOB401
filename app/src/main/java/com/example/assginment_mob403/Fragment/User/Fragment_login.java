@@ -258,4 +258,5 @@ public class Fragment_login extends Fragment {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
 }

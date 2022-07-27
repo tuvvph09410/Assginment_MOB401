@@ -1,5 +1,6 @@
 package com.example.assginment_mob403.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,9 +8,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,11 @@ import com.example.assginment_mob403.Fragment.InformationUser.Fragment_informati
 import com.example.assginment_mob403.Fragment.Thu.Fragment_khoanthu;
 import com.example.assginment_mob403.Fragment.Thu.Fragment_loaithu;
 import com.example.assginment_mob403.Fragment.TietKiem.Fragment_tietkiem;
+import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
+import com.example.assginment_mob403.ServerResponse.ServerResponseGetUserById;
+import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,6 +41,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivityThuChi extends AppCompatActivity {
     private static final String urlImage = "https://imgs.vietnamnet.vn/Images/2017/02/24/20/20170224204534-quan-ly-tai-chinh.jpg";
@@ -51,6 +67,7 @@ public class MainActivityThuChi extends AppCompatActivity {
     private String dataRegistration_date = "";
 
     private static final String TAG = MainActivityThuChi.class.getSimpleName();
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +75,8 @@ public class MainActivityThuChi extends AppCompatActivity {
         setContentView(R.layout.activity_main_thu_chi);
 
         getIntentExtra();
+
+        getSelectedById(dataId_user);
 
         initViewByID();
 
@@ -119,6 +138,7 @@ public class MainActivityThuChi extends AppCompatActivity {
                         loadFragment(fragment_change_password, "Đổi mật khẩu");
                         break;
                     case R.id.nav_information_user:
+                        getSelectedById(dataId_user);
                         Fragment_information_user fragment_information_user = new Fragment_information_user();
                         Bundle bundleIF = new Bundle();
                         bundleIF.putInt("dataId_user", dataId_user);
@@ -128,7 +148,7 @@ public class MainActivityThuChi extends AppCompatActivity {
                         bundleIF.putInt("dataPhone", dataPhone);
                         bundleIF.putString("dataRegistration_date", dataRegistration_date);
                         fragment_information_user.setArguments(bundleIF);
-                        loadFragment(fragment_information_user, "Đổi mật khẩu");
+                        loadFragment(fragment_information_user, "Thông tin tài khoản");
                         break;
                     case R.id.nav_tietkiem:
                         Fragment_tietkiem fragment_tietkiem = new Fragment_tietkiem();
@@ -157,13 +177,9 @@ public class MainActivityThuChi extends AppCompatActivity {
         Fragment_home fragment_home = new Fragment_home();
         Bundle bundleHome = new Bundle();
         bundleHome.putInt("dataId_user", dataId_user);
-        bundleHome.putString("dataFirst_name", dataFirst_name);
-        bundleHome.putString("dataLast_name", dataLast_name);
-        bundleHome.putString("dataEmail", dataEmail);
-        bundleHome.putInt("dataPhone", dataPhone);
-        bundleHome.putString("dataRegistration_date", dataRegistration_date);
         fragment_home.setArguments(bundleHome);
         loadFragment(fragment_home, "Trang chủ");
+
     }
 
     private void getIntentExtra() {
@@ -171,12 +187,7 @@ public class MainActivityThuChi extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             dataId_user = bundle.getInt("dataId_user");
-            dataFirst_name = bundle.getString("dataFirst_name");
-            dataLast_name = bundle.getString("dataLast_name");
-            dataEmail = bundle.getString("dataEmail");
-            dataPassword = bundle.getString("dataPassword");
-            dataPhone = bundle.getInt("dataPhone");
-            dataRegistration_date = bundle.getString("dataRegistration_date");
+
         }
 
     }
@@ -223,4 +234,38 @@ public class MainActivityThuChi extends AppCompatActivity {
             }
         }
     }
+
+    private void getSelectedById(int id_user) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserAPI userAPI = retrofit.create(UserAPI.class);
+        Call<ServerResponseGetUserById> call = userAPI.getUserById(id_user);
+        call.enqueue(new Callback<ServerResponseGetUserById>() {
+            @Override
+            public void onResponse(Call<ServerResponseGetUserById> call, Response<ServerResponseGetUserById> response) {
+                ServerResponseGetUserById serverResponseGetUserById = response.body();
+                List<User> userList = new ArrayList<>(Arrays.asList(serverResponseGetUserById.getUser()));
+                if (userList.size() != 0) {
+                    for (int i = 0; i < userList.size(); i++) {
+                        User user = userList.get(i);
+                        dataFirst_name = user.getFirst_name();
+                        dataLast_name = user.getLast_name();
+                        dataEmail = user.getEmail();
+                        dataPassword = user.getPassword();
+                        dataPhone = user.getPhone();
+                        dataRegistration_date = user.getRegistration_date();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseGetUserById> call, Throwable t) {
+                Toast.makeText(getApplication(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+
 }

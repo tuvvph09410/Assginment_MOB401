@@ -13,6 +13,7 @@ public class Utilities {
     public String PhoneInvalid = "Số điện thoại phải là số";
     public String PhoneLength = "Số điện thoại phải bao gồm từ 9 số đến 12 số";
     public String PhoneRequire = "Vui lòng nhập số điện thoại";
+    public String PhoneType = "Sai định dạng của số điện thoại";
     public String FirstNameLength = "Họ có độ dài từ 2 đến 20 ký tự";
     public String FirstNameRequire = "Vui lòng nhập họ";
     public String LastNameLength = "Tên phải từ 2 đến 20 ký tự";

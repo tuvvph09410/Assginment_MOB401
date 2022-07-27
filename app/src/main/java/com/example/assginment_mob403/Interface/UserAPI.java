@@ -1,8 +1,10 @@
 package com.example.assginment_mob403.Interface;
 
 import com.example.assginment_mob403.ServerResponse.ServerResponseChangePassword;
+import com.example.assginment_mob403.ServerResponse.ServerResponseGetUserById;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSelectAccount;
 import com.example.assginment_mob403.ServerResponse.ServerResponseSignUp;
+import com.example.assginment_mob403.ServerResponse.ServerResponseUpdateUser;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -27,10 +29,25 @@ public interface UserAPI {
             @Field("email") String email,
             @Field("password") String password
     );
+
     @FormUrlEncoded
     @POST("change_password_by_id_user.php")
     Call<ServerResponseChangePassword> changePasswordById(
             @Field("id_user") int id_user,
             @Field("new_password") String new_password
+    );
+
+    @FormUrlEncoded
+    @POST("update_user_by_id.php")
+    Call<ServerResponseUpdateUser> updateUser(
+            @Field("id_user") int id_user,
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("phone") int phone
+    );
+    @FormUrlEncoded
+    @POST("get_select_user_by_id.php")
+    Call<ServerResponseGetUserById> getUserById(
+            @Field("id_user") int id_user
     );
 }

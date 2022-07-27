@@ -6,13 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.assginment_mob403.Interface.UserAPI;
 import com.example.assginment_mob403.R;
+import com.example.assginment_mob403.ServerResponse.ServerResponseUpdateUser;
+import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.regex.Matcher;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Fragment_information_user extends Fragment {
@@ -42,9 +54,53 @@ public class Fragment_information_user extends Fragment {
 
         init();
 
+        initClickListener();
+
         removeErrorTextChange();
 
         return view;
+    }
+
+    private void initClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateEditInformation() == true) {
+                    String firstName = edFirstName.getText().toString();
+                    String lastName = edLastName.getText().toString();
+                    String email = edEmail.getText().toString();
+                    String stringPhone = edPhone.getText().toString();
+                    try {
+                        int phone = Integer.parseInt(stringPhone);
+                        updateUserServerAPI(dataId_user, firstName, lastName, phone);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), utilities.PhoneType, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private void updateUserServerAPI(int dataId_user, String firstName, String lastName, int phone) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        UserAPI userAPI = retrofit.create(UserAPI.class);
+        Call<ServerResponseUpdateUser> call = userAPI.updateUser(dataId_user, firstName, lastName, phone);
+        call.enqueue(new Callback<ServerResponseUpdateUser>() {
+            @Override
+            public void onResponse(Call<ServerResponseUpdateUser> call, Response<ServerResponseUpdateUser> response) {
+                ServerResponseUpdateUser serverResponseUpdateUser = response.body();
+                Toast.makeText(getContext(), serverResponseUpdateUser.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseUpdateUser> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void removeErrorTextChange() {
@@ -52,6 +108,57 @@ public class Fragment_information_user extends Fragment {
         this.utilities.removeErrorText(edlLastName, edLastName);
         this.utilities.removeErrorText(edlEmail, edEmail);
         this.utilities.removeErrorText(edlPhone, edPhone);
+    }
+
+    private Boolean validateEditInformation() {
+        Matcher matcherFirstName = this.utilities.NSCPattern.matcher(edFirstName.getText().toString().trim());
+        Matcher matcherLastName = this.utilities.NSCPattern.matcher(edLastName.getText().toString().trim());
+        Boolean success = true;
+
+        if (edFirstName.getText().toString().trim().equalsIgnoreCase("")) {
+            this.edlFirstName.setError(this.utilities.FirstNameRequire);
+            success = false;
+        } else {
+            if (edFirstName.getText().toString().trim().length() < 2 || edFirstName.getText().toString().trim().length() > 20) {
+                this.edlFirstName.setError(this.utilities.FirstNameLength);
+                success = false;
+            } else {
+                if (!matcherFirstName.matches()) {
+                    this.edlFirstName.setError(this.utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
+        }
+        if (edLastName.getText().toString().trim().equalsIgnoreCase("")) {
+            this.edlLastName.setError(this.utilities.LastNameRequire);
+            success = false;
+        } else {
+            if (edLastName.getText().toString().trim().length() < 2 || edLastName.getText().toString().trim().length() > 20) {
+                this.edlLastName.setError(this.utilities.LastNameLength);
+                success = false;
+            } else {
+                if (!matcherLastName.matches()) {
+                    this.edlLastName.setError(this.utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
+        }
+
+        if (edPhone.getText().toString().equalsIgnoreCase("")) {
+            edlPhone.setError(utilities.PhoneRequire);
+        } else {
+            if (edPhone.getText().toString().equalsIgnoreCase("")) {
+                edlPhone.setError(this.utilities.PhoneLength);
+                success = false;
+            } else {
+                if (edPhone.getText().toString().trim().length() <= 9 || edPhone.getText().toString().trim().length() >= 12) {
+                    edlPhone.setError(this.utilities.PhoneLength);
+                    success = false;
+                }
+            }
+        }
+
+        return success;
     }
 
     private void init() {
