@@ -67,7 +67,6 @@ public class MainActivityThuChi extends AppCompatActivity {
     private String dataRegistration_date = "";
 
     private static final String TAG = MainActivityThuChi.class.getSimpleName();
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,7 +198,7 @@ public class MainActivityThuChi extends AppCompatActivity {
 
     }
 
-    private void loadFragment(Fragment fragment, String name) {
+    public void loadFragment(Fragment fragment, String name) {
         toolbar.setTitle(name);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_main_activity_thuchi, fragment);

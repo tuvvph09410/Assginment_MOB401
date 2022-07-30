@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.assginment_mob403.Activity.MainActivityThuChi;
 import com.example.assginment_mob403.Fragment.Chi.Fragment_khoanchi;
 import com.example.assginment_mob403.Fragment.InformationUser.Fragment_information_user;
 import com.example.assginment_mob403.Fragment.Thu.Fragment_khoanthu;
@@ -75,13 +75,13 @@ public class Fragment_home extends Fragment {
         clKhoanThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Fragment_khoanthu());
+                ((MainActivityThuChi) getContext()).loadFragment(new Fragment_khoanthu(), "Khoản thu");
             }
         });
         clKhoanChi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Fragment_khoanchi());
+                ((MainActivityThuChi) getContext()).loadFragment(new Fragment_khoanchi(), "Khoản chi");
             }
         });
         clTaiKhoan.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +96,13 @@ public class Fragment_home extends Fragment {
                 bundleIF.putInt("dataPhone", dataPhone);
                 bundleIF.putString("dataRegistration_date", dataRegistration_date);
                 fragment_information_user.setArguments(bundleIF);
-                loadFragment(fragment_information_user);
+                ((MainActivityThuChi) getContext()).loadFragment(fragment_information_user, "Thông tin tài khoản");
             }
         });
         clTietKiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadFragment(new Fragment_tietkiem());
+                ((MainActivityThuChi) getContext()).loadFragment(new Fragment_tietkiem(), "Tiết kiệm");
             }
         });
     }
@@ -117,12 +117,13 @@ public class Fragment_home extends Fragment {
         fl_bar_chart = view.findViewById(R.id.l_bar_chart);
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_main_activity_thuchi, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
+//    private void loadFragment(Fragment fragment, String name) {
+//        toolbar.setTitle(name);
+//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container_main_activity_thuchi, fragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+//    }
 
     private void getSelectedById(int id_user) {
         Retrofit retrofit = new Retrofit.Builder()

@@ -6,8 +6,11 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/background_login.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/code_20_20.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_box_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_adb_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.18" />
+        <entry key="app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/ic_baseline_child_friendly_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_clean_hands_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_eco_24.xml" value="0.184" />
@@ -15,6 +18,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_notes_24.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_phone_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_report_gmailerrorred_24.xml" value="0.184" />
@@ -23,12 +27,18 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_round_power_settings_new_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/radius.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/search_radius.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23233695652173914" />
         <entry key="app/src/main/res/layout/activity_main_thu_chi.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.23233695652173914" />
+        <entry key="app/src/main/res/layout/dialog_add_khoanchi.xml" value="0.25769927536231885" />
+        <entry key="app/src/main/res/layout/dialog_add_khoanthu.xml" value="0.30078125" />
+        <entry key="app/src/main/res/layout/dialog_add_loaichi.xml" value="0.25769927536231885" />
+        <entry key="app/src/main/res/layout/dialog_add_loaithu.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_information_user.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_khoanchi.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_khoanthu.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_loaichi.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_loaithu.xml" value="0.26811594202898553" />
