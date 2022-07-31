@@ -3,6 +3,7 @@ package com.example.assginment_mob403.InterfaceAPI;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseDeleteLoaiChi;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseInsertLoaiChi;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
+import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseUpdateLoaichi;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -27,5 +28,12 @@ public interface LoaiChiAPI {
     @POST("delete_loaichi_by_id.php")
     Call<ServerResponseDeleteLoaiChi> deleteLoaiChi(
             @Field("id_loaichi") int id_loaichi
+    );
+
+    @FormUrlEncoded
+    @POST("update_loaichi_by_id.php")
+    Call<ServerResponseUpdateLoaichi> updateLoaiChi(
+            @Field("id_loaichi") int id_loaichi,
+            @Field("name_loaichi") String name_loaichi
     );
 }

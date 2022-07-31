@@ -91,6 +91,7 @@ public class ItemListViewAdapterLoaiChi extends BaseAdapter {
                 bundle.putInt("bid_loaichi", loaiChi.getId_loaichi());
                 bundle.putInt("bid_user", loaiChi.getId_user());
                 bundle.putString("bname_loaichi", loaiChi.getName_loaichi());
+                fragment_detail_loaichi.setArguments(bundle);
                 ((MainActivityThuChi) context).loadFragment(fragment_detail_loaichi, "Loại chi chi tiết");
             }
         });
