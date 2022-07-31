@@ -27,7 +27,7 @@ if( isset($_POST['id_user']) ){
                 echo json_encode($response);
     }else{
     $response["success"]=0;
-    $response["message"]="Chưa có tên loại chi nào cả, hãy thêm loại chi !"; 
+    $response["message"]="Chưa có tên loại chi nào cả, hãy thêm loại chi!"; 
     echo json_encode($response); 
     }
 

@@ -1,5 +1,6 @@
 package com.example.assginment_mob403.InterfaceAPI;
 
+import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseDeleteLoaiChi;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseInsertLoaiChi;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
 
@@ -20,5 +21,11 @@ public interface LoaiChiAPI {
     @POST("get_select_data_loaichi_by_id_user.php")
     Call<ServerResponseSelectLoaiChi> getSelectLoaiChi(
             @Field("id_user") int id_user
+    );
+
+    @FormUrlEncoded
+    @POST("delete_loaichi_by_id.php")
+    Call<ServerResponseDeleteLoaiChi> deleteLoaiChi(
+            @Field("id_loaichi") int id_loaichi
     );
 }

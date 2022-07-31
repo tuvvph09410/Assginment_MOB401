@@ -1,7 +1,7 @@
 package com.example.assginment_mob403.Model;
 
 public class LoaiChi {
-    private int id;
+    private int id_loaichi;
     private int id_user;
     private String name_loaichi;
 
@@ -10,9 +10,6 @@ public class LoaiChi {
         this.name_loaichi = name_loaichi;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public int getId_user() {
         return id_user;
@@ -22,8 +19,12 @@ public class LoaiChi {
         return name_loaichi;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId_loaichi() {
+        return id_loaichi;
+    }
+
+    public void setId_loaichi(int id_loaichi) {
+        this.id_loaichi = id_loaichi;
     }
 
     public void setId_user(int id_user) {

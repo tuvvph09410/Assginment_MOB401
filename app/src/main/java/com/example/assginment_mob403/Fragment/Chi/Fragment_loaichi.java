@@ -3,6 +3,7 @@ package com.example.assginment_mob403.Fragment.Chi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.assginment_mob403.Adapter.ItemListViewAdapterLoaiChi;
 import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
+import com.example.assginment_mob403.InterfaceListener.ItemClickListener;
 import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
+import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseDeleteLoaiChi;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseInsertLoaiChi;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
 import com.example.assginment_mob403.URLServer.PathURLServer;
@@ -50,7 +53,9 @@ public class Fragment_loaichi extends Fragment {
     TextInputEditText edName;
     Button btnAdd, btnCancel;
     ProgressDialog progressDialog;
+    ItemListViewAdapterLoaiChi itemListViewAdapterLoaiChi;
     List<LoaiChi> loaiChiList, loaiChiListSearch;
+    private static final String TAG = Fragment_loaichi.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,8 +70,6 @@ public class Fragment_loaichi extends Fragment {
 
         getSelectDataLoaiChiByIdUserAPI(data_idUser);
 
-        mapListView();
-
         clickListenerSearchView();
 
         fabAddClickListener();
@@ -74,19 +77,22 @@ public class Fragment_loaichi extends Fragment {
         return view;
     }
 
-    private void mapListView() {
-        loaiChiListSearch = getSelectDataLoaiChiByIdUserAPI(data_idUser);
-        ItemListViewAdapterLoaiChi itemListViewAdapterLoaiChi = new ItemListViewAdapterLoaiChi(getContext(), loaiChiList);
-        listView.setAdapter(itemListViewAdapterLoaiChi);
-
-    }
-
-
     private void init() {
         utilities = new Utilities();
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Đang tải ...");
+        itemListViewAdapterLoaiChi = new ItemListViewAdapterLoaiChi(getContext());
+        itemClickListView();
+    }
+
+    private void itemClickListView() {
+        itemListViewAdapterLoaiChi.setOnItemDeleteClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                deleteDataById(position, data_idUser);
+            }
+        });
     }
 
     private void fabAddClickListener() {
@@ -128,7 +134,6 @@ public class Fragment_loaichi extends Fragment {
 
 
     private void insertDataLoaiChiAPI(int data_idUser, String name_loaichi) {
-
         showProgress();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
@@ -141,7 +146,9 @@ public class Fragment_loaichi extends Fragment {
             public void onResponse(Call<ServerResponseInsertLoaiChi> call, Response<ServerResponseInsertLoaiChi> response) {
                 ServerResponseInsertLoaiChi responseInsertLoaiChi = response.body();
                 Toast.makeText(getContext(), responseInsertLoaiChi.getMessage(), Toast.LENGTH_LONG).show();
+                dialog.dismiss();
                 hideProgress();
+                getSelectDataLoaiChiByIdUserAPI(data_idUser);
             }
 
             @Override
@@ -152,13 +159,13 @@ public class Fragment_loaichi extends Fragment {
         });
     }
 
-    private List<LoaiChi> getSelectDataLoaiChiByIdUserAPI(int data_idUser) {
+    private void getSelectDataLoaiChiByIdUserAPI(int data_idUser) {
         showProgress();
-        Retrofit retrofit = new Retrofit.Builder()
+        final Retrofit[] retrofit = {new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
+                .build()};
+        LoaiChiAPI loaiChiAPI = retrofit[0].create(LoaiChiAPI.class);
         Call<ServerResponseSelectLoaiChi> call = loaiChiAPI.getSelectLoaiChi(data_idUser);
         call.enqueue(new Callback<ServerResponseSelectLoaiChi>() {
             @Override
@@ -169,6 +176,8 @@ public class Fragment_loaichi extends Fragment {
                     listView.setVisibility(View.VISIBLE);
                     tvNotify.setVisibility(View.GONE);
                     loaiChiList = new ArrayList<>(Arrays.asList(serverResponseSelectLoaiChi.getLoaichi()));
+                    itemListViewAdapterLoaiChi.setList(loaiChiList);
+                    listView.setAdapter(itemListViewAdapterLoaiChi);
                     hideProgress();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -183,10 +192,31 @@ public class Fragment_loaichi extends Fragment {
             public void onFailure(Call<ServerResponseSelectLoaiChi> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 hideProgress();
-
             }
         });
-        return loaiChiLists;
+    }
+
+    private void deleteDataById(int position, int data_idUser) {
+        Log.e(TAG, String.valueOf(position));
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
+        Call<ServerResponseDeleteLoaiChi> call = loaiChiAPI.deleteLoaiChi(position);
+        call.enqueue(new Callback<ServerResponseDeleteLoaiChi>() {
+            @Override
+            public void onResponse(Call<ServerResponseDeleteLoaiChi> call, Response<ServerResponseDeleteLoaiChi> response) {
+                ServerResponseDeleteLoaiChi serverResponseDeleteLoaiChi = response.body();
+                Toast.makeText(getContext(), serverResponseDeleteLoaiChi.getMessage(), Toast.LENGTH_LONG).show();
+                getSelectDataLoaiChiByIdUserAPI(data_idUser);
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseDeleteLoaiChi> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void removeErrorTextChange() {

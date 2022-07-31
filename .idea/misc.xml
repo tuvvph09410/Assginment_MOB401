@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/ic_baseline_child_friendly_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_clean_hands_24.xml" value="0.184" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.18" />
         <entry key="app/src/main/res/drawable/ic_baseline_eco_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.184" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.184" />
@@ -37,6 +38,7 @@
         <entry key="app/src/main/res/layout/dialog_add_loaichi.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/dialog_add_loaithu.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_detail_loaichi.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_information_user.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_khoanchi.xml" value="0.25769927536231885" />
@@ -47,7 +49,7 @@
         <entry key="app/src/main/res/layout/fragment_signin.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_tietkiem2.xml" value="0.19270833333333334" />
-        <entry key="app/src/main/res/layout/item_listview_loaichi.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_listview_loaichi.xml" value="0.45" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/menu/nav_menu_drawer_layout.xml" value="0.35885416666666664" />
       </map>
