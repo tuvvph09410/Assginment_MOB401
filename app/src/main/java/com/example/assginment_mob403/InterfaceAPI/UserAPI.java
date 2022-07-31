@@ -1,10 +1,10 @@
-package com.example.assginment_mob403.Interface;
+package com.example.assginment_mob403.InterfaceAPI;
 
-import com.example.assginment_mob403.ServerResponse.ServerResponseChangePassword;
-import com.example.assginment_mob403.ServerResponse.ServerResponseGetUserById;
-import com.example.assginment_mob403.ServerResponse.ServerResponseSelectAccount;
-import com.example.assginment_mob403.ServerResponse.ServerResponseSignUp;
-import com.example.assginment_mob403.ServerResponse.ServerResponseUpdateUser;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseChangePassword;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseGetUserById;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseSelectAccount;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseSignin;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseUpdateUser;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 public interface UserAPI {
     @FormUrlEncoded
     @POST("insert_user.php")
-    Call<ServerResponseSignUp> insertUser(
+    Call<ServerResponseSignin> insertUser(
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
             @Field("password") String password,

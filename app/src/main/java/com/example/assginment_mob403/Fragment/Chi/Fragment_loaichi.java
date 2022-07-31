@@ -1,26 +1,47 @@
 package com.example.assginment_mob403.Fragment.Chi;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import com.example.assginment_mob403.Adapter.ItemListViewAdapterLoaiChi;
+import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
+import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
+import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseInsertLoaiChi;
+import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
+import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class Fragment_loaichi extends Fragment {
     SearchView searchView;
     ListView listView;
+    TextView tvNotify;
     FloatingActionButton floatAddLoaiChi;
     private int data_idUser;
     Dialog dialog;
@@ -28,7 +49,8 @@ public class Fragment_loaichi extends Fragment {
     TextInputLayout edlName;
     TextInputEditText edName;
     Button btnAdd, btnCancel;
-
+    ProgressDialog progressDialog;
+    List<LoaiChi> loaiChiList, loaiChiListSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +63,10 @@ public class Fragment_loaichi extends Fragment {
 
         init();
 
+        getSelectDataLoaiChiByIdUserAPI(data_idUser);
+
+        mapListView();
+
         clickListenerSearchView();
 
         fabAddClickListener();
@@ -48,8 +74,19 @@ public class Fragment_loaichi extends Fragment {
         return view;
     }
 
+    private void mapListView() {
+        loaiChiListSearch = getSelectDataLoaiChiByIdUserAPI(data_idUser);
+        ItemListViewAdapterLoaiChi itemListViewAdapterLoaiChi = new ItemListViewAdapterLoaiChi(getContext(), loaiChiList);
+        listView.setAdapter(itemListViewAdapterLoaiChi);
+
+    }
+
+
     private void init() {
         utilities = new Utilities();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Đang tải ...");
     }
 
     private void fabAddClickListener() {
@@ -75,7 +112,10 @@ public class Fragment_loaichi extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (validateLoaiChi() == true) {
+                    String name_loaichi = edName.getText().toString();
+                    insertDataLoaiChiAPI(data_idUser, name_loaichi);
+                }
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +124,69 @@ public class Fragment_loaichi extends Fragment {
                 dialog.dismiss();
             }
         });
+    }
+
+
+    private void insertDataLoaiChiAPI(int data_idUser, String name_loaichi) {
+
+        showProgress();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
+        Call<ServerResponseInsertLoaiChi> call = loaiChiAPI.insertLoaiChi(data_idUser, name_loaichi);
+        call.enqueue(new Callback<ServerResponseInsertLoaiChi>() {
+            @Override
+            public void onResponse(Call<ServerResponseInsertLoaiChi> call, Response<ServerResponseInsertLoaiChi> response) {
+                ServerResponseInsertLoaiChi responseInsertLoaiChi = response.body();
+                Toast.makeText(getContext(), responseInsertLoaiChi.getMessage(), Toast.LENGTH_LONG).show();
+                hideProgress();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseInsertLoaiChi> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                hideProgress();
+            }
+        });
+    }
+
+    private List<LoaiChi> getSelectDataLoaiChiByIdUserAPI(int data_idUser) {
+        showProgress();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
+        Call<ServerResponseSelectLoaiChi> call = loaiChiAPI.getSelectLoaiChi(data_idUser);
+        call.enqueue(new Callback<ServerResponseSelectLoaiChi>() {
+            @Override
+            public void onResponse(Call<ServerResponseSelectLoaiChi> call, Response<ServerResponseSelectLoaiChi> response) {
+                ServerResponseSelectLoaiChi serverResponseSelectLoaiChi = response.body();
+                String message = serverResponseSelectLoaiChi.getMessage();
+                try {
+                    listView.setVisibility(View.VISIBLE);
+                    tvNotify.setVisibility(View.GONE);
+                    loaiChiList = new ArrayList<>(Arrays.asList(serverResponseSelectLoaiChi.getLoaichi()));
+                    hideProgress();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    hideProgress();
+                    listView.setVisibility(View.GONE);
+                    tvNotify.setVisibility(View.VISIBLE);
+                    tvNotify.setText(message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseSelectLoaiChi> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                hideProgress();
+
+            }
+        });
+        return loaiChiLists;
     }
 
     private void removeErrorTextChange() {
@@ -105,5 +208,39 @@ public class Fragment_loaichi extends Fragment {
         searchView = view.findViewById(R.id.search);
         listView = view.findViewById(R.id.list_view);
         floatAddLoaiChi = view.findViewById(R.id.fab_add);
+        tvNotify = view.findViewById(R.id.tv_notify);
+    }
+
+    private Boolean validateLoaiChi() {
+        Matcher matcherNameLoaiChi = utilities.NSCPattern.matcher(edName.getText().toString());
+        Boolean success = true;
+        if (edName.getText().toString().equalsIgnoreCase("")) {
+            edlName.setError(utilities.LoaiChiRequire);
+            success = false;
+        } else {
+            if (edName.getText().toString().length() <= 2 || edName.getText().toString().length() >=
+                    20) {
+                edlName.setError(utilities.LoaiChiLength);
+                success = false;
+            } else {
+                if (!matcherNameLoaiChi.matches()) {
+                    edlName.setError(utilities.NotSpecialCharacter);
+                    success = false;
+                }
+            }
+        }
+        return success;
+    }
+
+    private void showProgress() {
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+    }
+
+    private void hideProgress() {
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 }

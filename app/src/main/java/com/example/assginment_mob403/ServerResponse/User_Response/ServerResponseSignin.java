@@ -1,8 +1,8 @@
-package com.example.assginment_mob403.ServerResponse;
+package com.example.assginment_mob403.ServerResponse.User_Response;
 
 import com.example.assginment_mob403.Model.User;
 
-public class ServerResponseUpdateUser {
+public class ServerResponseSignin {
     private User user;
     private String message;
 

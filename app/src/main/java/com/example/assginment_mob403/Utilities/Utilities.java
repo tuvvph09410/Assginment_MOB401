@@ -28,6 +28,8 @@ public class Utilities {
     public String PriceInvalid = "Số tiền phải là số";
     public String EmailInvalid = "Sai định dạng email";
     public String EmailRequire = "Vui lòng nhập email";
+    public String LoaiChiRequire = "Vui lòng nhập loại chi";
+    public String LoaiChiLength = "Tên loại chi có độ dài từ 2 đến 20 ký tự";
 
 
     public Pattern NSCPattern = Pattern.compile("[A-Za-z0-9AÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶEÉÈẺẼẸÊẾỀỂỄỆIÍÌỈĨỊOÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢUÚÙỦŨỤƯỨỪỬỮỰYÝỲỶỸỴĐaáàảãạâấầẩẫậăắằẳẵặeéèẻẽẹêếềểễệiíìỉĩịoóòỏõọôốồổỗộơớờởỡợuúùủũụưứừửữựyýỳỷỹỵđ ]+");

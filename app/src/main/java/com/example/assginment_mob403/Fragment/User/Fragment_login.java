@@ -18,10 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.assginment_mob403.Activity.MainActivityThuChi;
-import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.InterfaceAPI.UserAPI;
 import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
-import com.example.assginment_mob403.ServerResponse.ServerResponseSelectAccount;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseSelectAccount;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;

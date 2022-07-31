@@ -17,10 +17,10 @@ import com.example.assginment_mob403.Fragment.Chi.Fragment_khoanchi;
 import com.example.assginment_mob403.Fragment.InformationUser.Fragment_information_user;
 import com.example.assginment_mob403.Fragment.Thu.Fragment_khoanthu;
 import com.example.assginment_mob403.Fragment.TietKiem.Fragment_tietkiem;
-import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.InterfaceAPI.UserAPI;
 import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
-import com.example.assginment_mob403.ServerResponse.ServerResponseGetUserById;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseGetUserById;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.github.mikephil.charting.charts.BarChart;
 

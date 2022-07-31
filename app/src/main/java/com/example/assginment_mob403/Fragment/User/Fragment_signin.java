@@ -13,10 +13,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.InterfaceAPI.UserAPI;
 import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
-import com.example.assginment_mob403.ServerResponse.ServerResponseSignUp;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseSignin;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
@@ -196,18 +196,18 @@ public class Fragment_signin extends Fragment {
                 .build();
         UserAPI userAPI = retrofit.create(UserAPI.class);
         User user = new User(first_name, last_name, email, phone, password, registration_date);
-        Call<ServerResponseSignUp> call = userAPI.insertUser(user.getFirst_name(), user.getLast_name(), user.getPassword(), user.getEmail(), user.getPhone(), user.getRegistration_date());
-        call.enqueue(new Callback<ServerResponseSignUp>() {
+        Call<ServerResponseSignin> call = userAPI.insertUser(user.getFirst_name(), user.getLast_name(), user.getPassword(), user.getEmail(), user.getPhone(), user.getRegistration_date());
+        call.enqueue(new Callback<ServerResponseSignin>() {
             @Override
-            public void onResponse(Call<ServerResponseSignUp> call, Response<ServerResponseSignUp> response) {
-                ServerResponseSignUp serverResponseSignUp = response.body();
+            public void onResponse(Call<ServerResponseSignin> call, Response<ServerResponseSignin> response) {
+                ServerResponseSignin serverResponseSignUp = response.body();
                 hideProgress();
                 Toast.makeText(getContext(), serverResponseSignUp.getMessage(), Toast.LENGTH_LONG).show();
 
             }
 
             @Override
-            public void onFailure(Call<ServerResponseSignUp> call, Throwable t) {
+            public void onFailure(Call<ServerResponseSignin> call, Throwable t) {
                 hideProgress();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e(TAG, t.getMessage());

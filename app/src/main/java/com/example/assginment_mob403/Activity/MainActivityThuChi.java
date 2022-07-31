@@ -1,6 +1,5 @@
 package com.example.assginment_mob403.Activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,10 +28,10 @@ import com.example.assginment_mob403.Fragment.InformationUser.Fragment_informati
 import com.example.assginment_mob403.Fragment.Thu.Fragment_khoanthu;
 import com.example.assginment_mob403.Fragment.Thu.Fragment_loaithu;
 import com.example.assginment_mob403.Fragment.TietKiem.Fragment_tietkiem;
-import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.InterfaceAPI.UserAPI;
 import com.example.assginment_mob403.Model.User;
 import com.example.assginment_mob403.R;
-import com.example.assginment_mob403.ServerResponse.ServerResponseGetUserById;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseGetUserById;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;

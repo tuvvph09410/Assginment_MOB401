@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.assginment_mob403.Interface.UserAPI;
+import com.example.assginment_mob403.InterfaceAPI.UserAPI;
 import com.example.assginment_mob403.R;
-import com.example.assginment_mob403.ServerResponse.ServerResponseUpdateUser;
+import com.example.assginment_mob403.ServerResponse.User_Response.ServerResponseUpdateUser;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
