@@ -29,17 +29,33 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <Spinner
-                android:id="@+id/spinner_khoanchi"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/l_spinner_khoanchi"
                 android:layout_width="250dp"
-                android:layout_height="?actionBarSize"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title"
-                app:startIconDrawable="@drawable/code_20_20" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+                <Spinner
+                    android:id="@+id/spinner_khoanchi"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edl_name_khoanchi"
@@ -53,7 +69,7 @@
                 app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_khoanchi"
+                app:layout_constraintTop_toBottomOf="@+id/l_spinner_khoanchi"
                 app:startIconDrawable="@drawable/code_20_20">
 
                 <com.google.android.material.textfield.TextInputEditText

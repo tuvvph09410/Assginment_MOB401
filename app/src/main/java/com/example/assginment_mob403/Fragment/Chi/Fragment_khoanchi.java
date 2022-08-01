@@ -15,13 +15,27 @@ import android.widget.Spinner;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import com.example.assginment_mob403.Adapter.ItemSpinnerAdapterLoaiChi;
+import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
+import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
+import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
+import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Fragment_khoanchi extends Fragment {
@@ -35,6 +49,7 @@ public class Fragment_khoanchi extends Fragment {
     private Utilities utilities;
     private int dataId_user, mDate, mMonth, mYear;
     Dialog dialog;
+    ItemSpinnerAdapterLoaiChi itemSpinnerAdapterLoaiChi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +86,7 @@ public class Fragment_khoanchi extends Fragment {
 
     private void init() {
         utilities = new Utilities();
+        itemSpinnerAdapterLoaiChi = new ItemSpinnerAdapterLoaiChi(getContext());
     }
 
     private void fabAddClickListener() {
@@ -95,7 +111,33 @@ public class Fragment_khoanchi extends Fragment {
 
                 removeErrorTextChange();
                 edlDateAddDatePickerClickListener();
+
+                initSpinnerGetAPILoaiChi(dataId_user);
                 clickListenerButtonDialog();
+
+            }
+        });
+    }
+
+    private void initSpinnerGetAPILoaiChi(int dataId_user) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
+        Call<ServerResponseSelectLoaiChi> call = loaiChiAPI.getSelectLoaiChi(dataId_user);
+        call.enqueue(new Callback<ServerResponseSelectLoaiChi>() {
+            @Override
+            public void onResponse(Call<ServerResponseSelectLoaiChi> call, Response<ServerResponseSelectLoaiChi> response) {
+                ServerResponseSelectLoaiChi serverResponseSelectLoaiChi = response.body();
+                List<LoaiChi> loaiChiList = new ArrayList<>(Arrays.asList(serverResponseSelectLoaiChi.getLoaichi()));
+                itemSpinnerAdapterLoaiChi.setLoaiChiList(loaiChiList);
+                spinnerLoaiChi.setAdapter(itemSpinnerAdapterLoaiChi);
+
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseSelectLoaiChi> call, Throwable t) {
 
             }
         });
