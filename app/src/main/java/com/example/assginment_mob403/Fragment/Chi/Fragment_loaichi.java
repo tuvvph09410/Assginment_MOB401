@@ -160,12 +160,13 @@ public class Fragment_loaichi extends Fragment {
     }
 
     private void getSelectDataLoaiChiByIdUserAPI(int data_idUser) {
+        Log.e(TAG, String.valueOf(data_idUser));
         showProgress();
-        final Retrofit[] retrofit = {new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
-                .build()};
-        LoaiChiAPI loaiChiAPI = retrofit[0].create(LoaiChiAPI.class);
+                .build();
+        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
         Call<ServerResponseSelectLoaiChi> call = loaiChiAPI.getSelectLoaiChi(data_idUser);
         call.enqueue(new Callback<ServerResponseSelectLoaiChi>() {
             @Override
@@ -185,6 +186,7 @@ public class Fragment_loaichi extends Fragment {
                     listView.setVisibility(View.GONE);
                     tvNotify.setVisibility(View.VISIBLE);
                     tvNotify.setText(message);
+                    hideProgress();
                 }
             }
 

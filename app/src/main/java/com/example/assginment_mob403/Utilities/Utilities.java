@@ -24,12 +24,16 @@ public class Utilities {
     public String RePasswordCompare = "Mật khẩu mới nhập lại không trùng nhau";
     public String PasswordOldNotMatchPasswordNew = "Mật khẩu cũ và mật khẩu mới không thể trùng nhau";
     public String ConfirmPasswordRequire = "Vui lòng nhập xác nhận mật khẩu";
-    public String PriceRequire = "Vui lòng nhập số tiền";
-    public String PriceInvalid = "Số tiền phải là số";
     public String EmailInvalid = "Sai định dạng email";
     public String EmailRequire = "Vui lòng nhập email";
     public String LoaiChiRequire = "Vui lòng nhập loại chi";
     public String LoaiChiLength = "Tên loại chi có độ dài từ 2 đến 20 ký tự";
+    public String KhoanchiNameRequire = "Vui lòng nhập tên khoản chi";
+    public String KhoanchiSpinnerSelectRequire = "Vui lòng chọn loại chi";
+    public String KhoanchiNameLength = "Tên khoản chi có độ dài từ 2 đến 20 ký tự";
+    public String KhoanchiMoneyRequire = "Vui lòng nhập số tiền khoản chi";
+    public String KhoanchiMoneyInvalid = "Số khoản chi tiền phải là số";
+    public String KhoanchiSelectDate = "Vui lòng chọn ngày";
 
 
     public Pattern NSCPattern = Pattern.compile("[A-Za-z0-9AÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶEÉÈẺẼẸÊẾỀỂỄỆIÍÌỈĨỊOÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢUÚÙỦŨỤƯỨỪỬỮỰYÝỲỶỸỴĐaáàảãạâấầẩẫậăắằẳẵặeéèẻẽẹêếềểễệiíìỉĩịoóòỏõọôốồổỗộơớờởỡợuúùủũụưứừửữựyýỳỷỹỵđ ]+");
