@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.assginment_mob403.Activity.MainActivityThuChi;
 import com.example.assginment_mob403.Fragment.Chi.Fragment_detail_loaichi;
-import com.example.assginment_mob403.InterfaceListener.ItemClickListener;
+import com.example.assginment_mob403.InterfaceListener.ItemClickListenerLoaiChi;
 import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
 
@@ -23,14 +23,14 @@ public class ItemListViewAdapterLoaiChi extends BaseAdapter {
     private Context context;
     private List<LoaiChi> loaiChiList;
 
-    public static ItemClickListener itemDeleteClickListener;
+    public static ItemClickListenerLoaiChi itemDeleteClickListener;
 
     public ItemListViewAdapterLoaiChi(Context context) {
         this.context = context;
 
     }
 
-    public void setOnItemDeleteClickListener(ItemClickListener itemDeleteClickListener) {
+    public void setOnItemDeleteClickListener(ItemClickListenerLoaiChi itemDeleteClickListener) {
         ItemListViewAdapterLoaiChi.itemDeleteClickListener = itemDeleteClickListener;
     }
 

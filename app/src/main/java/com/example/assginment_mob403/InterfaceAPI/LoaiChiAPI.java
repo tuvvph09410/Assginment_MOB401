@@ -36,4 +36,11 @@ public interface LoaiChiAPI {
             @Field("id_loaichi") int id_loaichi,
             @Field("name_loaichi") String name_loaichi
     );
+
+    @FormUrlEncoded
+    @POST("get_select_name_loaichi_by_id_loaichi_and_id_user.php")
+    Call<ServerResponseSelectLoaiChi> getSelectedLoaiChiByIdUserAndIdLoaiChi(
+            @Field("id_user") int id_user,
+            @Field("id_loaichi") int id_loaichi
+    );
 }

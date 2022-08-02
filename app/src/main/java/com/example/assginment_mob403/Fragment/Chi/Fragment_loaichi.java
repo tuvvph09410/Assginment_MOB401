@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.assginment_mob403.Adapter.ItemListViewAdapterLoaiChi;
 import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
-import com.example.assginment_mob403.InterfaceListener.ItemClickListener;
+import com.example.assginment_mob403.InterfaceListener.ItemClickListenerLoaiChi;
 import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseDeleteLoaiChi;
@@ -87,7 +87,7 @@ public class Fragment_loaichi extends Fragment {
     }
 
     private void itemClickListView() {
-        itemListViewAdapterLoaiChi.setOnItemDeleteClickListener(new ItemClickListener() {
+        itemListViewAdapterLoaiChi.setOnItemDeleteClickListener(new ItemClickListenerLoaiChi() {
             @Override
             public void onItemClick(int position) {
                 deleteDataById(position, data_idUser);

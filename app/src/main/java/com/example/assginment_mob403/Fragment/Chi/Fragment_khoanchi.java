@@ -23,9 +23,12 @@ import com.example.assginment_mob403.Adapter.ItemListViewAdapterKhoanChi;
 import com.example.assginment_mob403.Adapter.ItemSpinnerAdapterLoaiChi;
 import com.example.assginment_mob403.InterfaceAPI.KhoanChiAPI;
 import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
+import com.example.assginment_mob403.InterfaceListener.ItemClickListenerKhoanChi;
+import com.example.assginment_mob403.InterfaceListener.ItemClickListenerLoaiChi;
 import com.example.assginment_mob403.Model.KhoanChi;
 import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
+import com.example.assginment_mob403.ServerResponse.KhoanChi_Response.ServerResponseDeleteKhoanChi;
 import com.example.assginment_mob403.ServerResponse.KhoanChi_Response.ServerResponseInsertKhoanChi;
 import com.example.assginment_mob403.ServerResponse.KhoanChi_Response.ServerResponseSelectedDataById;
 import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
@@ -61,7 +64,7 @@ public class Fragment_khoanchi extends Fragment {
     Dialog dialog;
     TextView tvNotify;
     ItemSpinnerAdapterLoaiChi itemSpinnerAdapterLoaiChi;
-    private int id_khoanchi = 0;
+    private int id_loaichi = 0;
     private static final String TAG = Fragment_loaichi.class.getSimpleName();
     ProgressDialog progressDialog;
     ItemListViewAdapterKhoanChi itemListViewAdapterKhoanChi;
@@ -109,6 +112,41 @@ public class Fragment_khoanchi extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Đang load ...");
         itemListViewAdapterKhoanChi = new ItemListViewAdapterKhoanChi(getContext());
+        itemClickListView();
+    }
+
+    private void itemClickListView() {
+        itemListViewAdapterKhoanChi.setOnItemDeleteClickListener(new ItemClickListenerKhoanChi() {
+            @Override
+            public void onItemClick(int position) {
+                deleteLoaiChiAPI(position, dataId_user);
+            }
+        });
+    }
+
+    private void deleteLoaiChiAPI(int id_khoanchi, int dataId_user) {
+        showProgress();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PathURLServer.getBaseURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        KhoanChiAPI khoanChiAPI = retrofit.create(KhoanChiAPI.class);
+        Call<ServerResponseDeleteKhoanChi> call = khoanChiAPI.deleteKhoanchi(id_khoanchi);
+        call.enqueue(new Callback<ServerResponseDeleteKhoanChi>() {
+            @Override
+            public void onResponse(Call<ServerResponseDeleteKhoanChi> call, Response<ServerResponseDeleteKhoanChi> response) {
+                ServerResponseDeleteKhoanChi serverResponseDeleteKhoanChi = response.body();
+                Toast.makeText(getContext(), serverResponseDeleteKhoanChi.getMessage(), Toast.LENGTH_LONG).show();
+                getSelecteDatKhoanChiByIdUser(dataId_user);
+                hideProgress();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseDeleteKhoanChi> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                hideProgress();
+            }
+        });
     }
 
     private void fabAddClickListener() {
@@ -163,7 +201,7 @@ public class Fragment_khoanchi extends Fragment {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                             LoaiChi loaiChi = loaiChiList.get(i);
-                            id_khoanchi = loaiChi.getId_loaichi();
+                            id_loaichi = loaiChi.getId_loaichi();
 
                         }
 
@@ -196,7 +234,7 @@ public class Fragment_khoanchi extends Fragment {
                     String add_date = edDateAdd.getText().toString();
                     try {
                         int money = Integer.parseInt(stringMoney);
-                        insertDataKhoanChiAPI(dataId_user, id_khoanchi, name, money, add_date, note);
+                        insertDataKhoanChiAPI(dataId_user, id_loaichi, name, money, add_date, note);
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                         edlMoney.setError(utilities.KhoanchiMoneyInvalid);
@@ -212,14 +250,14 @@ public class Fragment_khoanchi extends Fragment {
         });
     }
 
-    private void insertDataKhoanChiAPI(int dataId_user, int id_khoanchi, String name, int money, String add_date, String note) {
+    private void insertDataKhoanChiAPI(int dataId_user, int id_loaichi, String name, int money, String add_date, String note) {
         showProgress();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         KhoanChiAPI khoanChiAPI = retrofit.create(KhoanChiAPI.class);
-        Call<ServerResponseInsertKhoanChi> call = khoanChiAPI.insertKhoanChi(dataId_user, id_khoanchi, name, money, add_date, note);
+        Call<ServerResponseInsertKhoanChi> call = khoanChiAPI.insertKhoanChi(dataId_user, id_loaichi, name, money, add_date, note);
         call.enqueue(new Callback<ServerResponseInsertKhoanChi>() {
             @Override
             public void onResponse(Call<ServerResponseInsertKhoanChi> call, Response<ServerResponseInsertKhoanChi> response) {
@@ -277,7 +315,7 @@ public class Fragment_khoanchi extends Fragment {
         Boolean success = true;
         Matcher matcherName = utilities.NSCPattern.matcher(edName.getText().toString());
         Matcher matcherMoney = utilities.NSCPattern.matcher(edMoney.getText().toString());
-        if (id_khoanchi == 0) {
+        if (id_loaichi == 0) {
             Toast.makeText(getContext(), utilities.KhoanchiSpinnerSelectRequire, Toast.LENGTH_LONG).show();
             success = false;
         }
@@ -360,4 +398,5 @@ public class Fragment_khoanchi extends Fragment {
             }
         });
     }
+
 }

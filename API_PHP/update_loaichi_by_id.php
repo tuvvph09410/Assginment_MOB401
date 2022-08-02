@@ -9,7 +9,7 @@ if($connect->connect_error)
 {
     die("Connection Failed: " .$connect->connect_error);
 }
-if( isset($_POST['id_loaichi'])){
+if( isset($_POST['id_loaichi']) && isset($_POST['name_loaichi']) ){
 
     $id_loaichi = $_POST['id_loaichi'];
     $name_loaichi=$_POST['name_loaichi'];

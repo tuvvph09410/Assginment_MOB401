@@ -38,6 +38,7 @@
         <entry key="app/src/main/res/layout/dialog_add_loaichi.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/dialog_add_loaithu.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.26811594202898553" />
+        <entry key="app/src/main/res/layout/fragment_detail_khoanchi.xml" value="0.26721014492753625" />
         <entry key="app/src/main/res/layout/fragment_detail_loaichi.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_information_user.xml" value="0.1" />
