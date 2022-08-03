@@ -20,18 +20,17 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.example.assginment_mob403.Adapter.ItemListViewAdapterKhoanThu;
-import com.example.assginment_mob403.Adapter.ItemSpinnerAdapterLoaiChi;
-import com.example.assginment_mob403.Fragment.Chi.Fragment_loaichi;
+import com.example.assginment_mob403.Adapter.ItemSpinnerAdapterLoaiThu;
 import com.example.assginment_mob403.InterfaceAPI.KhoanThuAPI;
-import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
+import com.example.assginment_mob403.InterfaceAPI.LoaiThuAPI;
 import com.example.assginment_mob403.InterfaceListener.ItemClickListenerKhoanThu;
 import com.example.assginment_mob403.Model.KhoanThu;
-import com.example.assginment_mob403.Model.LoaiChi;
+import com.example.assginment_mob403.Model.LoaiThu;
 import com.example.assginment_mob403.R;
 import com.example.assginment_mob403.ServerResponse.KhoanThu_Response.ServerResponseDeleteKhoanThu;
 import com.example.assginment_mob403.ServerResponse.KhoanThu_Response.ServerResponseInsertKhoanThu;
 import com.example.assginment_mob403.ServerResponse.KhoanThu_Response.ServerResponseSelectedDataById;
-import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
+import com.example.assginment_mob403.ServerResponse.LoaiThu_Response.ServerResponseSelectLoaiThu;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 import com.example.assginment_mob403.Utilities.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -58,14 +57,14 @@ public class Fragment_khoanthu extends Fragment {
     Button btnAdd, btnCancel;
     TextInputLayout edlName, edlMoney, edlNote, edlDateAdd;
     TextInputEditText edName, edMoney, edNote, edDateAdd;
-    Spinner spinnerLoaiChi;
+    Spinner spinnerLoaiThu;
     private Utilities utilities;
     private int dataId_user, mDate, mMonth, mYear;
     Dialog dialog;
     TextView tvNotify;
-    ItemSpinnerAdapterLoaiChi itemSpinnerAdapterLoaiChi;
-    private int id_loaichi = 0;
-    private static final String TAG = Fragment_loaichi.class.getSimpleName();
+    ItemSpinnerAdapterLoaiThu itemSpinnerAdapterLoaiThu;
+    private int id_LoaiThu = 0;
+    private static final String TAG = Fragment_loaithu.class.getSimpleName();
     ProgressDialog progressDialog;
     ItemListViewAdapterKhoanThu itemListViewAdapterKhoanThu;
     private List<KhoanThu> KhoanThuList;
@@ -74,7 +73,6 @@ public class Fragment_khoanthu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_khoanthu, container, false);
-
 
         initGetArguments();
 
@@ -105,7 +103,7 @@ public class Fragment_khoanthu extends Fragment {
 
     private void init() {
         utilities = new Utilities();
-        itemSpinnerAdapterLoaiChi = new ItemSpinnerAdapterLoaiChi(getContext());
+        itemSpinnerAdapterLoaiThu = new ItemSpinnerAdapterLoaiThu(getContext());
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Đang load ...");
@@ -117,12 +115,12 @@ public class Fragment_khoanthu extends Fragment {
         itemListViewAdapterKhoanThu.setOnItemDeleteClickListener(new ItemClickListenerKhoanThu() {
             @Override
             public void onItemClick(int position) {
-                deleteLoaiChiAPI(position, dataId_user);
+                deleteLoaiThuAPI(position, dataId_user);
             }
         });
     }
 
-    private void deleteLoaiChiAPI(int id_KhoanThu, int dataId_user) {
+    private void deleteLoaiThuAPI(int id_KhoanThu, int dataId_user) {
         showProgress();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
@@ -165,11 +163,11 @@ public class Fragment_khoanthu extends Fragment {
                 edMoney = dialog.findViewById(R.id.ed_money_khoanthu);
                 edNote = dialog.findViewById(R.id.ed_note_khoanthu);
                 edDateAdd = dialog.findViewById(R.id.ed_date_khoanthu);
-                spinnerLoaiChi = dialog.findViewById(R.id.spinner_khoanthu);
+                spinnerLoaiThu = dialog.findViewById(R.id.spinner_khoanthu);
 
                 removeErrorTextChange();
                 edlDateAddDatePickerClickListener();
-                initSpinnerGetAPILoaiChi(dataId_user);
+                initSpinnerGetAPILoaiThu(dataId_user);
                 clickListenerButtonDialog();
 
 
@@ -177,29 +175,27 @@ public class Fragment_khoanthu extends Fragment {
         });
     }
 
-    private void initSpinnerGetAPILoaiChi(int dataId_user) {
-
+    private void initSpinnerGetAPILoaiThu(int dataId_user) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
-        Call<ServerResponseSelectLoaiChi> call = loaiChiAPI.getSelectLoaiChi(dataId_user);
-        call.enqueue(new Callback<ServerResponseSelectLoaiChi>() {
+        LoaiThuAPI LoaiThuAPI = retrofit.create(LoaiThuAPI.class);
+        Call<ServerResponseSelectLoaiThu> call = LoaiThuAPI.getSelectLoaiThu(dataId_user);
+        call.enqueue(new Callback<ServerResponseSelectLoaiThu>() {
             @Override
-            public void onResponse(Call<ServerResponseSelectLoaiChi> call, Response<ServerResponseSelectLoaiChi> response) {
-                ServerResponseSelectLoaiChi serverResponseSelectLoaiChi = response.body();
+            public void onResponse(Call<ServerResponseSelectLoaiThu> call, Response<ServerResponseSelectLoaiThu> response) {
+                ServerResponseSelectLoaiThu serverResponseSelectLoaiThu = response.body();
                 try {
-                    List<LoaiChi> loaiChiList = new ArrayList<>(Arrays.asList(serverResponseSelectLoaiChi.getLoaichi()));
-
-                    itemSpinnerAdapterLoaiChi.setLoaiChiList(loaiChiList);
-                    spinnerLoaiChi.setAdapter(itemSpinnerAdapterLoaiChi);
-                    spinnerLoaiChi.setSelection(0, true);
-                    spinnerLoaiChi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    List<LoaiThu> LoaiThuList = new ArrayList<>(Arrays.asList(serverResponseSelectLoaiThu.getLoaiThu()));
+                    itemSpinnerAdapterLoaiThu.setLoaiThuList(LoaiThuList);
+                    spinnerLoaiThu.setAdapter(itemSpinnerAdapterLoaiThu);
+                    spinnerLoaiThu.setSelection(0, true);
+                    spinnerLoaiThu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            LoaiChi loaiChi = loaiChiList.get(i);
-                            id_loaichi = loaiChi.getId_loaichi();
+                            LoaiThu LoaiThu = LoaiThuList.get(i);
+                            id_LoaiThu = LoaiThu.getId_loaithu();
 
                         }
 
@@ -215,7 +211,7 @@ public class Fragment_khoanthu extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ServerResponseSelectLoaiChi> call, Throwable t) {
+            public void onFailure(Call<ServerResponseSelectLoaiThu> call, Throwable t) {
 
             }
         });
@@ -232,7 +228,7 @@ public class Fragment_khoanthu extends Fragment {
                     String add_date = edDateAdd.getText().toString();
                     try {
                         int money = Integer.parseInt(stringMoney);
-                        insertDataKhoanThuAPI(dataId_user, id_loaichi, name, money, add_date, note);
+                        insertDataKhoanThuAPI(dataId_user, id_LoaiThu, name, money, add_date, note);
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                         edlMoney.setError(utilities.KhoanThuMoneyInvalid);
@@ -248,14 +244,14 @@ public class Fragment_khoanthu extends Fragment {
         });
     }
 
-    private void insertDataKhoanThuAPI(int dataId_user, int id_loaichi, String name, int money, String add_date, String note) {
+    private void insertDataKhoanThuAPI(int dataId_user, int id_LoaiThu, String name, int money, String add_date, String note) {
         showProgress();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         KhoanThuAPI KhoanThuAPI = retrofit.create(KhoanThuAPI.class);
-        Call<ServerResponseInsertKhoanThu> call = KhoanThuAPI.insertKhoanThu(dataId_user, id_loaichi, name, money, add_date, note);
+        Call<ServerResponseInsertKhoanThu> call = KhoanThuAPI.insertKhoanThu(dataId_user, id_LoaiThu, name, money, add_date, note);
         call.enqueue(new Callback<ServerResponseInsertKhoanThu>() {
             @Override
             public void onResponse(Call<ServerResponseInsertKhoanThu> call, Response<ServerResponseInsertKhoanThu> response) {
@@ -313,7 +309,7 @@ public class Fragment_khoanthu extends Fragment {
         Boolean success = true;
         Matcher matcherName = utilities.NSCPattern.matcher(edName.getText().toString());
         Matcher matcherMoney = utilities.NSCPattern.matcher(edMoney.getText().toString());
-        if (id_loaichi == 0) {
+        if (id_LoaiThu == 0) {
             Toast.makeText(getContext(), utilities.KhoanThuSpinnerSelectRequire, Toast.LENGTH_LONG).show();
             success = false;
         }

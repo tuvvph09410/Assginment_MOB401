@@ -39,6 +39,7 @@
         <entry key="app/src/main/res/layout/dialog_add_loaithu.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_detail_khoanchi.xml" value="0.26721014492753625" />
+        <entry key="app/src/main/res/layout/fragment_detail_khoanthu.xml" value="0.1546875" />
         <entry key="app/src/main/res/layout/fragment_detail_loaichi.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/layout/fragment_detail_loaithu.xml" value="0.26721014492753625" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
@@ -52,9 +53,12 @@
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/layout/fragment_tietkiem2.xml" value="0.19270833333333334" />
         <entry key="app/src/main/res/layout/item_listview_khoanchi.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/item_listview_khoanthu.xml" value="0.26721014492753625" />
         <entry key="app/src/main/res/layout/item_listview_loaichi.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_listview_loaithu.xml" value="0.26721014492753625" />
         <entry key="app/src/main/res/layout/item_spinner.xml" value="0.25769927536231885" />
+        <entry key="app/src/main/res/layout/item_spinner_loaichi.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/item_spinner_loaithu.xml" value="0.26721014492753625" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.26811594202898553" />
         <entry key="app/src/main/res/menu/nav_menu_drawer_layout.xml" value="0.35885416666666664" />
       </map>

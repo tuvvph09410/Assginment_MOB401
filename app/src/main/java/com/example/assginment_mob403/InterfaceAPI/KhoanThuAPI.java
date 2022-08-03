@@ -15,7 +15,7 @@ public interface KhoanThuAPI {
     @POST("insert_khoanthu.php")
     Call<ServerResponseInsertKhoanThu> insertKhoanThu(
             @Field("id_user") int id_user,
-            @Field("id_loaichi") int id_loaichi,
+            @Field("id_loaithu") int id_loaithu,
             @Field("name_khoanthu") String name_khoanthu,
             @Field("money_khoanthu") int money_khoanthu,
             @Field("date_add_khoanthu") String date_add_khoanthu,

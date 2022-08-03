@@ -75,7 +75,11 @@ public class Fragment_home extends Fragment {
         clKhoanThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivityThuChi) getContext()).loadFragment(new Fragment_khoanthu(), "Khoản thu");
+                Bundle bundle = new Bundle();
+                Fragment_khoanthu fragment_khoanthu = new Fragment_khoanthu();
+                bundle.putInt("dataId_user", dataId_user);
+                fragment_khoanthu.setArguments(bundle);
+                ((MainActivityThuChi) getContext()).loadFragment(fragment_khoanthu, "Khoản thu");
             }
         });
         clKhoanChi.setOnClickListener(new View.OnClickListener() {

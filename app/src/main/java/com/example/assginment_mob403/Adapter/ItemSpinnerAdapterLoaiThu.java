@@ -7,37 +7,37 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.assginment_mob403.Model.LoaiChi;
+import com.example.assginment_mob403.Model.LoaiThu;
 import com.example.assginment_mob403.R;
 
 import java.util.List;
 
-public class ItemSpinnerAdapterLoaiChi extends BaseAdapter {
-    private List<LoaiChi> loaiChiList;
+public class ItemSpinnerAdapterLoaiThu extends BaseAdapter {
+    private List<LoaiThu> LoaiThuList;
     private Context context;
 
-    public ItemSpinnerAdapterLoaiChi(Context context) {
+    public ItemSpinnerAdapterLoaiThu(Context context) {
         this.context = context;
     }
 
-    public void setLoaiChiList(List<LoaiChi> loaiChiList) {
-        this.loaiChiList = loaiChiList;
+    public void setLoaiThuList(List<LoaiThu> LoaiThuList) {
+        this.LoaiThuList = LoaiThuList;
     }
 
     @Override
     public int getCount() {
-        if (loaiChiList.isEmpty()) {
+        if (LoaiThuList.isEmpty()) {
             return 0;
         }
-        return loaiChiList.size();
+        return LoaiThuList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        if (loaiChiList.isEmpty()) {
+        if (LoaiThuList.isEmpty()) {
             return null;
         }
-        return loaiChiList.get(i);
+        return LoaiThuList.get(i);
     }
 
     @Override
@@ -50,14 +50,14 @@ public class ItemSpinnerAdapterLoaiChi extends BaseAdapter {
         ViewHolder viewHolder = null;
         if (view == null) {
             viewHolder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.item_spinner_loaichi, viewGroup, false);
-            viewHolder.tvName =(TextView) view.findViewById(R.id.tv_name_loaichi);
+            view = LayoutInflater.from(context).inflate(R.layout.item_spinner_loaithu, viewGroup, false);
+            viewHolder.tvName = view.findViewById(R.id.tv_name_loaithu);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        LoaiChi loaiChi = loaiChiList.get(i);
-        viewHolder.tvName.setText(loaiChi.getName_loaichi());
+        LoaiThu LoaiThu = LoaiThuList.get(i);
+        viewHolder.tvName.setText(LoaiThu.getName_loaithu());
         return view;
     }
 

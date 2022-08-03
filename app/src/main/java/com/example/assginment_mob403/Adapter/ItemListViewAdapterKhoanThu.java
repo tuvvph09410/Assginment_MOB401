@@ -12,12 +12,14 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.assginment_mob403.Activity.MainActivityThuChi;
-import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
+import com.example.assginment_mob403.Fragment.Thu.Fragment_detail_khoanthu;
+import com.example.assginment_mob403.InterfaceAPI.LoaiThuAPI;
 import com.example.assginment_mob403.InterfaceListener.ItemClickListenerKhoanThu;
 import com.example.assginment_mob403.Model.KhoanThu;
-import com.example.assginment_mob403.Model.LoaiChi;
+import com.example.assginment_mob403.Model.LoaiThu;
+import com.example.assginment_mob403.Model.LoaiThu;
 import com.example.assginment_mob403.R;
-import com.example.assginment_mob403.ServerResponse.LoaiChi_Response.ServerResponseSelectLoaiChi;
+import com.example.assginment_mob403.ServerResponse.LoaiThu_Response.ServerResponseSelectLoaiThu;
 import com.example.assginment_mob403.URLServer.PathURLServer;
 
 import java.util.ArrayList;
@@ -77,7 +79,7 @@ public class ItemListViewAdapterKhoanThu extends BaseAdapter {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(context).inflate(R.layout.item_listview_khoanthu, viewGroup, false);
             viewHolder.tvName = view.findViewById(R.id.tv_name);
-            viewHolder.tvNameLoaiChi = view.findViewById(R.id.tv_name_loaichi);
+            viewHolder.tvNameLoaiThu = view.findViewById(R.id.tv_name_loaithu);
             viewHolder.tvMoney = view.findViewById(R.id.tv_money);
             viewHolder.tvNote = view.findViewById(R.id.tv_note);
             viewHolder.tvDateAdd = view.findViewById(R.id.tv_date_add);
@@ -92,7 +94,7 @@ public class ItemListViewAdapterKhoanThu extends BaseAdapter {
         viewHolder.tvMoney.setText(String.valueOf(KhoanThu.getMoney_khoanthu()));
         viewHolder.tvNote.setText(KhoanThu.getNote_khoanthu());
         viewHolder.tvDateAdd.setText(KhoanThu.getDate_add_khoanthu());
-        getNameLoaiChi(KhoanThu.getId_user(), KhoanThu.getId_khoanthu(), viewHolder.tvNameLoaiChi);
+        getNameLoaiThu(KhoanThu.getId_user(), KhoanThu.getId_khoanthu(), viewHolder.tvNameLoaiThu);
         viewHolder.iBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,50 +107,50 @@ public class ItemListViewAdapterKhoanThu extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-//                Fragment_detail_KhoanThu fragment_detail_KhoanThu = new Fragment_detail_KhoanThu();
-//                bundle.putInt("bId_KhoanThu", KhoanThu.getId_KhoanThu());
-//                bundle.putInt("bId_user", KhoanThu.getId_user());
-//                bundle.putString("bName", KhoanThu.getName_KhoanThu());
-//                bundle.putInt("bMoney", KhoanThu.getMoney_KhoanThu());
-//                bundle.putString("bNote", KhoanThu.getNote_KhoanThu());
-//                bundle.putString("bDateAdd", KhoanThu.getDate_add_KhoanThu());
-//                bundle.putString("bNameLoaiChi", name);
-//                fragment_detail_KhoanThu.setArguments(bundle);
-//                ((MainActivityThuChi) context).loadFragment(fragment_detail_KhoanThu, "Khoản chi chi tiết");
+                Fragment_detail_khoanthu fragment_detail_KhoanThu = new Fragment_detail_khoanthu();
+                bundle.putInt("bId_KhoanThu", KhoanThu.getId_khoanthu());
+                bundle.putInt("bId_user", KhoanThu.getId_user());
+                bundle.putString("bName", KhoanThu.getName_khoanthu());
+                bundle.putInt("bMoney", KhoanThu.getMoney_khoanthu());
+                bundle.putString("bNote", KhoanThu.getNote_khoanthu());
+                bundle.putString("bDateAdd", KhoanThu.getDate_add_khoanthu());
+                bundle.putString("bNameLoaiThu", name);
+                fragment_detail_KhoanThu.setArguments(bundle);
+                ((MainActivityThuChi) context).loadFragment(fragment_detail_KhoanThu, "Khoản thu chi tiết");
             }
         });
         return view;
     }
 
 
-    private void getNameLoaiChi(int id_user, int id_loaichi, TextView tvName) {
+    private void getNameLoaiThu(int id_user, int id_LoaiThu, TextView tvName) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PathURLServer.getBaseURL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        LoaiChiAPI loaiChiAPI = retrofit.create(LoaiChiAPI.class);
-        Call<ServerResponseSelectLoaiChi> call = loaiChiAPI.getSelectedLoaiChiByIdUserAndIdLoaiChi(id_user, id_loaichi);
-        call.enqueue(new Callback<ServerResponseSelectLoaiChi>() {
+        LoaiThuAPI LoaiThuAPI = retrofit.create(LoaiThuAPI.class);
+        Call<ServerResponseSelectLoaiThu> call = LoaiThuAPI.getSelectedLoaiThuByIdUserAndIdLoaiThu(id_user, id_LoaiThu);
+        call.enqueue(new Callback<ServerResponseSelectLoaiThu>() {
             @Override
-            public void onResponse(Call<ServerResponseSelectLoaiChi> call, Response<ServerResponseSelectLoaiChi> response) {
-                ServerResponseSelectLoaiChi responseSelectLoaiChi = response.body();
-                List<LoaiChi> loaiChiList = new ArrayList<>(Arrays.asList(responseSelectLoaiChi.getLoaichi()));
-                for (int i = 0; i < loaiChiList.size(); i++) {
-                    LoaiChi loaiChi = loaiChiList.get(i);
-                    name = loaiChi.getName_loaichi();
+            public void onResponse(Call<ServerResponseSelectLoaiThu> call, Response<ServerResponseSelectLoaiThu> response) {
+                ServerResponseSelectLoaiThu responseSelectLoaiThu = response.body();
+                List<LoaiThu> LoaiThuList = new ArrayList<>(Arrays.asList(responseSelectLoaiThu.getLoaiThu()));
+                for (int i = 0; i < LoaiThuList.size(); i++) {
+                    LoaiThu LoaiThu = LoaiThuList.get(i);
+                    name = LoaiThu.getName_loaithu();
                 }
                 tvName.setText(name);
             }
 
             @Override
-            public void onFailure(Call<ServerResponseSelectLoaiChi> call, Throwable t) {
+            public void onFailure(Call<ServerResponseSelectLoaiThu> call, Throwable t) {
 
             }
         });
     }
 
     public class ViewHolder {
-        TextView tvName, tvNameLoaiChi, tvMoney, tvNote, tvDateAdd;
+        TextView tvName, tvNameLoaiThu, tvMoney, tvNote, tvDateAdd;
         ImageButton iBtnDelete;
         ConstraintLayout l_KhoanThu;
     }
