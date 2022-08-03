@@ -34,6 +34,8 @@ public class Utilities {
     public String KhoanchiMoneyRequire = "Vui lòng nhập số tiền khoản chi";
     public String KhoanchiMoneyInvalid = "Số khoản chi tiền phải là số";
     public String KhoanchiSelectDate = "Vui lòng chọn ngày";
+    public String LoaiThuRequire = "Vui lòng nhập loại thu";
+    public String LoaiThuLength = "Tên loại thu có độ dài từ 2 đến 20 ký tự";
 
 
     public Pattern NSCPattern = Pattern.compile("[A-Za-z0-9AÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶEÉÈẺẼẸÊẾỀỂỄỆIÍÌỈĨỊOÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢUÚÙỦŨỤƯỨỪỬỮỰYÝỲỶỸỴĐaáàảãạâấầẩẫậăắằẳẵặeéèẻẽẹêếềểễệiíìỉĩịoóòỏõọôốồổỗộơớờởỡợuúùủũụưứừửữựyýỳỷỹỵđ ]+");
