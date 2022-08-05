@@ -70,7 +70,7 @@ public class Fragment_loaichi extends Fragment {
 
         getSelectDataLoaiChiByIdUserAPI(data_idUser);
 
-        clickListenerSearchView();
+        onChangeTextSearchView();
 
         fabAddClickListener();
 
@@ -225,8 +225,26 @@ public class Fragment_loaichi extends Fragment {
         utilities.removeErrorText(edlName, edName);
     }
 
-    private void clickListenerSearchView() {
+    private void onChangeTextSearchView() {
         searchView.setQueryHint("Tìm kiếm theo tên loại chi");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+               loaiChiListSearch = new ArrayList<>();
+                for (int i = 0; i < loaiChiList.size(); i++) {
+                    if (loaiChiList.get(i).getName_loaichi().startsWith(searchView.getQuery().toString())) {
+                        loaiChiListSearch.add(loaiChiList.get(i));
+                    }
+                    itemListViewAdapterLoaiChi.setList(loaiChiListSearch);
+                }
+                return false;
+            }
+        });
     }
 
     private void initGetArguments() {

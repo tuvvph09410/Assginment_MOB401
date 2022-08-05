@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.assginment_mob403.Adapter.ItemListViewAdapterLoaiThu;
 import com.example.assginment_mob403.InterfaceAPI.LoaiThuAPI;
-
 import com.example.assginment_mob403.InterfaceListener.ItemClickListenerLoaiThu;
 import com.example.assginment_mob403.Model.LoaiThu;
 import com.example.assginment_mob403.R;
@@ -54,7 +53,7 @@ public class Fragment_loaithu extends Fragment {
     Button btnAdd, btnCancel;
     ProgressDialog progressDialog;
     ItemListViewAdapterLoaiThu itemListViewAdapterLoaiThu;
-    List<LoaiThu> LoaiThuList, LoaiThuListSearch;
+    List<LoaiThu> LoaiThuList, loaiThuListSearch;
     private static final String TAG = Fragment_loaithu.class.getSimpleName();
 
 
@@ -71,7 +70,7 @@ public class Fragment_loaithu extends Fragment {
 
         getSelectDataLoaiThuByIdUserAPI(data_idUser);
 
-        clickListenerSearchView();
+        onChangeTextSearchView();
 
         fabAddClickListener();
 
@@ -226,8 +225,26 @@ public class Fragment_loaithu extends Fragment {
         utilities.removeErrorText(edlName, edName);
     }
 
-    private void clickListenerSearchView() {
+    private void onChangeTextSearchView() {
         searchView.setQueryHint("Tìm kiếm theo tên loại thu");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                loaiThuListSearch = new ArrayList<>();
+                for (int i = 0; i < LoaiThuList.size(); i++) {
+                    if (LoaiThuList.get(i).getName_loaithu().startsWith(searchView.getQuery().toString())) {
+                        loaiThuListSearch.add(LoaiThuList.get(i));
+                    }
+                    itemListViewAdapterLoaiThu.setList(loaiThuListSearch);
+                }
+                return false;
+            }
+        });
     }
 
     private void initGetArguments() {

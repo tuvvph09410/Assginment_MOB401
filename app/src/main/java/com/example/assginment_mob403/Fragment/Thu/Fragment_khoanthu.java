@@ -67,7 +67,7 @@ public class Fragment_khoanthu extends Fragment {
     private static final String TAG = Fragment_loaithu.class.getSimpleName();
     ProgressDialog progressDialog;
     ItemListViewAdapterKhoanThu itemListViewAdapterKhoanThu;
-    private List<KhoanThu> KhoanThuList;
+    private List<KhoanThu> KhoanThuList, khoanThuListSearh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,13 +84,31 @@ public class Fragment_khoanthu extends Fragment {
 
         fabAddClickListener();
 
-        clickListenerSearchView();
+        onChangeTextSearchView();
 
         return view;
     }
 
-    private void clickListenerSearchView() {
-        searchView.setQueryHint("Tìm kiếm theo tên khoản chi");
+    private void onChangeTextSearchView() {
+        searchView.setQueryHint("Tìm kiếm theo tên khoản thu");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                khoanThuListSearh = new ArrayList<>();
+                for (int i = 0; i < KhoanThuList.size(); i++) {
+                    if (KhoanThuList.get(i).getName_khoanthu().startsWith(searchView.getQuery().toString())) {
+                        khoanThuListSearh.add(KhoanThuList.get(i));
+                    }
+                    itemListViewAdapterKhoanThu.setKhoanThuList(khoanThuListSearh);
+                }
+                return false;
+            }
+        });
     }
 
     private void initGetArguments() {

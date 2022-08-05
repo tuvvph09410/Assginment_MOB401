@@ -24,7 +24,6 @@ import com.example.assginment_mob403.Adapter.ItemSpinnerAdapterLoaiChi;
 import com.example.assginment_mob403.InterfaceAPI.KhoanChiAPI;
 import com.example.assginment_mob403.InterfaceAPI.LoaiChiAPI;
 import com.example.assginment_mob403.InterfaceListener.ItemClickListenerKhoanChi;
-import com.example.assginment_mob403.InterfaceListener.ItemClickListenerLoaiChi;
 import com.example.assginment_mob403.Model.KhoanChi;
 import com.example.assginment_mob403.Model.LoaiChi;
 import com.example.assginment_mob403.R;
@@ -68,7 +67,7 @@ public class Fragment_khoanchi extends Fragment {
     private static final String TAG = Fragment_loaichi.class.getSimpleName();
     ProgressDialog progressDialog;
     ItemListViewAdapterKhoanChi itemListViewAdapterKhoanChi;
-    private List<KhoanChi> khoanChiList;
+    private List<KhoanChi> khoanChiList, khoanChiListSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,15 +85,34 @@ public class Fragment_khoanchi extends Fragment {
 
         fabAddClickListener();
 
-        clickListenerSearchView();
+        onChangeTextSearchView();
 
 
         return view;
 
     }
 
-    private void clickListenerSearchView() {
+    private void onChangeTextSearchView() {
         searchView.setQueryHint("Tìm kiếm theo tên khoản chi");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                khoanChiListSearch = new ArrayList<>();
+                for (int i = 0; i < khoanChiList.size(); i++) {
+                    if (khoanChiList.get(i).getName_khoanchi().startsWith(searchView.getQuery().toString())) {
+                        khoanChiListSearch.add(khoanChiList.get(i));
+                    }
+                    itemListViewAdapterKhoanChi.setKhoanChiList(khoanChiListSearch);
+                }
+                return false;
+            }
+        });
+
     }
 
     private void initGetArguments() {
